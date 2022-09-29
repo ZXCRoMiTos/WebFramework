@@ -1,5 +1,5 @@
 from datetime import date
-from views import Index, Another
+from views import Index, Another, Category
 
 
 def date_front(request):
@@ -11,4 +11,5 @@ fronts = [date_front]
 routes = {
     '/': Index(),
     '/another/': Another(),
+    '/category/': Category(),
 }

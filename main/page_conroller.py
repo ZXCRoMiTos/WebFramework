@@ -1,9 +1,9 @@
-from jinja2 import Template
-from os.path import join
+from jinja2 import FileSystemLoader
+from jinja2.environment import Environment
 
 
 def render(page_name, folder='pages', **kwargs):
-    file_path = join(folder, page_name)
-    with open(file_path, encoding='utf-8') as file:
-        page = Template(file.read())
-    return page.render(**kwargs)
+    env = Environment()
+    env.loader = FileSystemLoader(folder)
+    template = env.get_template(page_name)
+    return template.render(**kwargs)
