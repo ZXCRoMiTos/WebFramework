@@ -5,18 +5,42 @@
 {% endblock %}
 {% block header %} {% include 'header.html' %} {% endblock %}
 {% block body %}
-    <hr>
-    <h1>{{ name }}</h1>
-    <hr>
-    <p class="create-post-title">Создание поста</p>
-        <form method="post" class="create-post-form">
-            <input type="hidden" name="type" value="create_post">
-            <input class="create-post-small-input" type="text" name="name" placeholder="Название">
-            <input class="create-post-small-input" type="text" name="media" placeholder="Медиа">
-            <input class="create-post-big-input" type="text" name="description" placeholder="Описание"></br>
-            <button class="create-post-submit" type="submit">Сохранить и обновить</button>
+
+    <div>
+        <hr>
+        <h1>{{ name }}</h1>
+        <hr>
+    </div>
+
+    <div>
+        <ul class="categories-list">
+            {% for item in subcategories_list %}
+                <li class="categories-item">
+                    <nobr><a class="category-link" href="/category/?id={{item.id}}">{{ item.name }}</a></nobr>
+                </li>
+            {% endfor %}
+        </ul>
+        <form method="post" class="create-category-form">
+            <input type="hidden" name="type" value="create_subcategory">
+            <label>Создание подкатегории:  </label><input class="create-subcategory-input" type="text" name="name" placeholder="Название">
+            <button type="submit">Сохранить и обновить</button>
         </form>
-    {% for post in objects_list %}
+    </div>
+
+   <div>
+       <p class="create-post-title">Создание поста</p>
+       <form method="post" class="create-form">
+           <input type="hidden" name="type" value="create_post">
+           <input class="create-post-small-input" type="text" name="name" placeholder="Название">
+           <input class="create-post-small-input" type="text" name="media" placeholder="Медиа">
+           <input class="create-post-big-input" type="text" name="description" placeholder="Описание"></br>
+           <button class="create-post-submit" type="submit">Сохранить и обновить</button>
+       </form>
+       <hr>
+   </div>
+
+    <div>
+        {% for post in posts_list %}
         <div class="content-block">
             <h2>{{ post.name }}</h2>
             <img src={{ post.content[0] }} alt="media">
@@ -27,5 +51,7 @@
                 <button class="copy-post-submit" type="submit">Копировать</button>
             </form>
         </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
+
 {% endblock %}

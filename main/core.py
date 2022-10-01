@@ -44,13 +44,13 @@ class WebFramework:
             data = PostRequest(enviour).create_params_dict()
             value = self.decode_value(data)
             self.request['data'] = value
-            print('POST:', value)
+            print('Пришел POST запрос с параметрами:', value)
         if method == 'GET':
             data = GetRequest(enviour).create_params_dict()
             value = self.decode_value(data)
             if value:
                 self.request['request_params'] = value
-                print('GET:', value)
+                print('Пришел GET запрос с параметрами:', value)
 
     def choose_view(self):
         if self.path in self.routes:
@@ -66,3 +66,26 @@ class WebFramework:
         code, body = self.view(self.request)
         start_response(code, [('Content-Type', 'text/html')])
         return [body.encode('utf-8')]
+
+
+class DebugApplication(WebFramework):
+
+    def __init__(self, routes_obj, fronts_obj):
+        self.application = WebFramework(routes_obj, fronts_obj)
+        super().__init__(routes_obj, fronts_obj)
+
+    def __call__(self, env, start_response):
+        print('DEBUG MODE')
+        print(env)
+        return self.application(env, start_response)
+
+
+class FakeApplication(WebFramework):
+
+    def __init__(self, routes_obj, fronts_obj):
+        self.application = WebFramework(routes_obj, fronts_obj)
+        super().__init__(routes_obj, fronts_obj)
+
+    def __call__(self, env, start_response):
+        start_response('200 OK', [('Content-Type', 'text/html')])
+        return [b'Hello from Fake']

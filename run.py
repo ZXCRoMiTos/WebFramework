@@ -1,6 +1,7 @@
 from wsgiref.simple_server import make_server
-from main.core import WebFramework
-from urls import routes, fronts
+from main.core import WebFramework, DebugApplication, FakeApplication
+from urls import fronts
+from patterns.structural import routes
 
 
 application = WebFramework(routes, fronts)

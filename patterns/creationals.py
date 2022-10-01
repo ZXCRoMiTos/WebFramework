@@ -33,11 +33,13 @@ class UserFactory:
 class Category:
     auto_id = 0
 
-    def __init__(self, name, category):
+    def __init__(self, name, category, subcategories, parents):
         self.id = Category.auto_id
         Category.auto_id += 1
         self.name = name
         self.category = category
+        self.subcategories = subcategories
+        self.parents = parents
         self.posts = []
 
 
@@ -79,14 +81,18 @@ class Engine:
         self.registered_users = []
         self.verified_users = []
         self.categories = []
+        self.subcategories = []
         self.posts = []
 
     @staticmethod
-    def create_category(name, category=None):
-        return Category(name, category)
+    def create_category(name, category, subcategories, parents):
+        return Category(name, category, subcategories, parents)
 
     def find_category_by_id(self, id):
         for item in self.categories:
+            if item.id == id:
+                return item
+        for item in self.subcategories:
             if item.id == id:
                 return item
         raise Exception(f'Нет категории с id: {id}')
