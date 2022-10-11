@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %} {{ title }} {% endblock %}
+{% block style %}
+   {% include 'style.html' %}
+{% endblock %}
+{% block header %} {% include 'header.html' %} {% endblock %}
+{% block body %}
+    <hr><h1>Создание пользователя</h1><hr style="margin-bottom: 20px; ">
+    <form method="post" class="overall-indent-left overall-indent-bottom">
+        <label>Имя пользователя:  </label><input type="text" name="name" class="create-user-input">
+        <button type="submit">Сохранить и обновить</button>
+    </form>
+    {% include 'users_list.html' %}<hr>
+{% endblock %}

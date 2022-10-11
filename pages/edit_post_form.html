@@ -1,0 +1,11 @@
+<div class="edit-post-form" id="{{ post.id }}">
+    <p class="paragraph-title">Редактирование поста</p>
+    <form method="post" class="overall-indent-left overall-indent-bottomm">
+        <input type="hidden" name="type" value="edit_post">
+        <input type="hidden" name="id" value="{{ post.id }}">
+        <input class="edit-post-small-input" type="text" name="name" placeholder="Название" value="{{ post.name }}">
+        <input class="edit-post-small-input" type="text" name="media" placeholder="Медиа" value="{{ post.content[0] }}">
+        <input class="edit-post-big-input" type="text" name="description" placeholder="Описание" value="{{ post.content[1] }}"></br>
+        <button class="edit-post-submit" type="submit">Сохранить и обновить</button>
+    </form>
+</div>

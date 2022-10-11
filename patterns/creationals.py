@@ -1,9 +1,16 @@
 from quopri import decodestring
 from copy import deepcopy
+from datetime import datetime
+from patterns.behavioral import Observer
 
 
 class User:
-    pass
+    auto_id = 0
+
+    def __init__(self, name):
+        self.id = User.auto_id
+        self.name = name
+        User.auto_id += 1
 
 
 class Guest(User):
@@ -26,11 +33,11 @@ class UserFactory:
     }
 
     @classmethod
-    def create(cls, type_):
-        return cls.types[type_]()
+    def create(cls, type_, name):
+        return cls.types[type_](name)
 
 
-class Category:
+class Category(Observer):
     auto_id = 0
 
     def __init__(self, name, category, subcategories, parents):
@@ -41,6 +48,12 @@ class Category:
         self.subcategories = subcategories
         self.parents = parents
         self.posts = []
+        self.subscribers = []
+        super().__init__()
+
+    def add_post(self, post):
+        self.posts.append(post)
+        self.notify(post.name)
 
 
 class PostPrototype:
@@ -49,11 +62,15 @@ class PostPrototype:
 
 
 class Post(PostPrototype):
+    auto_id = 0
+
     def __init__(self, name, category, content):
+        self.id = Post.auto_id
+        Post.auto_id += 1
         self.name = name
         self.category = category
         self.content = content
-        self.category.posts.append(self)
+        self.category.add_post(self)
 
 
 class ImagePost(Post):
@@ -85,6 +102,15 @@ class Engine:
         self.posts = []
 
     @staticmethod
+    def create_user(type_, name):
+        return UserFactory.create(type_, name)
+
+    def find_user_by_name(self, name):
+        for item in self.registered_users:
+            if item.name == name:
+                return item
+
+    @staticmethod
     def create_category(name, category, subcategories, parents):
         return Category(name, category, subcategories, parents)
 
@@ -101,9 +127,9 @@ class Engine:
     def create_post(type_, name, category, content):
         return PostFactory.create(type_, name, category, content)
 
-    def get_post(self, name):
+    def get_post_by_id(self, id):
         for post in self.posts:
-            if post.name == name:
+            if post.id == int(id):
                 return post
         return None
 
@@ -133,9 +159,9 @@ class SingletonByName(type):
 
 
 class Logger(metaclass=SingletonByName):
-    def __init__(self, name):
+    def __init__(self, name, writer):
         self.name = name
+        self.writer = writer
 
-    @staticmethod
-    def log(text):
-        print('log: ', text)
+    def log(self, text):
+        self.writer.write(f'{datetime.now()}: {text}')

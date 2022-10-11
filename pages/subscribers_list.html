@@ -1,0 +1,10 @@
+<hr style="margin-bottom: 20px; ">
+<p class="paragraph-title">Список подписчиков</p>
+<div class="users-list">
+    <p style="line-height: 25px; ">
+        Всего {{ subscribers_list|length }}:
+        {% for num, subsriber in zip(range(1, subscribers_list|length + 1), subscribers_list) %}
+            {{ num }})&nbsp;{{ subsriber.name }};
+        {% endfor %}
+    </p>
+</div>

@@ -1,0 +1,10 @@
+<hr style="margin-bottom: 20px; ">
+<p class="paragraph-title">Список пользователей</p>
+<div class="users-list">
+    <p style="line-height: 25px; ">
+        Всего {{ users|length }}:
+        {% for num, user in zip(range(1, users |length + 1), users) %}
+            {{ num }})&nbsp;{{ user.name }};
+        {% endfor %}
+    </p>
+</div>

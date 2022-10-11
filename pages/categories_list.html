@@ -1,0 +1,7 @@
+<ul class="categories-list">
+    {% for item in categories_list %}
+        <li class="categories-item">
+            <nobr><a class="category-link" href="/category/?id={{item.id}}">{{ item.name }}</a></nobr>
+        </li>
+    {% endfor %}
+</ul>

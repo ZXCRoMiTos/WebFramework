@@ -1,0 +1,11 @@
+<hr style="margin-bottom: 20px; ">
+<p class="paragraph-title">Подписка пользователя</p>
+<form method="post" class="overall-indent-left">
+    <input type="hidden" name="type" value="subscribe">
+    <label>Пользователи:  </label><select class="subscribe-input" name="name">
+        {% for user in users_list %}
+            <option id="{{ user.id }}">{{ user.name }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Сохранить и обновить</button>
+</form>
