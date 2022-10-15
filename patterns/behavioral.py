@@ -1,15 +1,14 @@
 from jsonpickle import dumps, loads
+from datetime import datetime
 import sys
 sys.path.append('../')
 from main.page_conroller import render
 
 
 class FileWriter:
-    def __init__(self):
-        self.filename = 'log'
-
     def write(self, text):
-        with open(self.filename, 'a', encoding='utf-8') as file:
+        now = datetime.now()
+        with open(f'logs/{now.year}-{now.month}-{now.day}.txt', 'a', encoding='utf-8') as file:
             file.write(f'{text}\n')
 
 
