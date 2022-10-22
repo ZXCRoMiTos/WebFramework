@@ -3,10 +3,10 @@
  <head>
   <meta charset="utf-8" />
   <title>{% block title %} {% endblock %}</title>
-  <style>{% block style %} {% endblock %}</style>
+  <style>{% block style %} {% include static('style.css') %} {% endblock %}</style>
  </head>
  <body>
-    {% block header %} {% endblock %}
+    {% block header %} {% include template('header.html') %} {% endblock %}
     {% block body %} {% endblock %}
     <script>{% block script %} {% endblock %}</script>
  </body>

@@ -4,7 +4,7 @@ h1 { text-align: center; }
 h2 { text-align: center; margin-bottom: 15 px; margin-top: 0px; }
 img { margin-left: 23px; margin-right: 23px; margin-bottom: 10px; width: 450px; height: 450px; }
 .menu { display: flex; justify-content: space-between; }
-.content-block { margin: auto; width: 500px; border: 1px solid; padding: 20px; margin-top: 25px; }
+.content-block { margin: auto; width: 500px; border: 1px solid; padding: 20px; }
 .content-text { padding-left: 24px; padding-right: 24px; }
 .categories-list { margin: auto; width: 525px; height: 40px; border: 1px solid; margin-bottom: 5px; margin-top: 20px;
     display: flex; flex-direction: row; overflow: hidden; overflow-x: auto; padding-left: 10px;
@@ -23,6 +23,7 @@ img { margin-left: 23px; margin-right: 23px; margin-bottom: 10px; width: 450px; 
 .create-user-input { width: 230px; }
 .paragraph-title-big { text-align: center; font-size: 24px; }
 .overall-indent-left { margin-left: 29px; }
+.overall-indent-right { margin-right: 29px; }
 .overall-indent-bottom { margin-bottom: 20px; }
 .subscribe-input { width: 281px; }
 .form-space { margin-top: 20px; }
@@ -39,4 +40,14 @@ img { margin-left: 23px; margin-right: 23px; margin-bottom: 10px; width: 450px; 
 .edit-post-big-input { width: 442px; margin-bottom: 4px; }
 .edit-post-submit { width: 450px; }
 .hide { display: none; }
-.space { margin-bottom: 40px; };
+.space { margin-bottom: 40px; }
+.register-form { margin-left: 140px; margin-bottom: 20px; }
+.register-input { width: 300px; height: 25px; margin-bottom: 2px; font-size: 18px; }
+.register-submit { width: 308px; height: 30px; font-size: 18px; }
+.subscribe-button { margin-left: 115px; width: 308px; height: 30px; font-size: 18px; }
+.post-information { margin: auto; display: flex; justify-content: space-between; margin-top: 25px;  width: 530px;
+    border-left: 1px solid; border-right: 1px solid; border-top: 1px solid; padding: 5px; }
+.pagination { display: flex; justify-content: space-between; }
+.comment-form { margin-top: 10px; margin-bottom: 10px; }
+.comment-input { width: 448px; }
+.comments { width: 500px; border: 1px solid; padding-left: 20px; padding-right: 20px; margin-bottom: 40px; margin-top: 10px; }

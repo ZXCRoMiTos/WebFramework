@@ -1,5 +1,5 @@
 from datetime import date
-from views import Index, Users, Category, PostsApi
+from views import Index, Registration, Category, PostsApi, Login, Post
 from patterns.structural import routes
 
 
@@ -10,7 +10,7 @@ def date_front(request):
 fronts = [date_front]
 
 add_routes = {
-    '/users/': Users(),
+    '/registration/': Registration(),
 }
 
 for route in add_routes:
