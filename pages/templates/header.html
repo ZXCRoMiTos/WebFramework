@@ -1,0 +1,10 @@
+<header>
+   <ul class="menu">
+        <li><a href="/">Главная</a></li>
+        {% if not user %}
+            <li><a href="/login/">Войти</a>/<a href="/registration/">Зарегистрироваться</a></li>
+        {% else %}
+            <li><a href="/" class="exit-button">Выйти</a></li>
+        {% endif %}
+   </ul>
+</header>

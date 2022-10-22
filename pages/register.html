@@ -1,0 +1,14 @@
+{% extends template('base.html') %}
+{% block title %} {{ title }} {% endblock %}
+{% block body %}
+    <hr><h1>Регистрация</h1><hr style="margin-bottom: 20px; ">
+    <form method="post" class="register-form" onclick="return false">
+        <input class="register-input" type="text" name="email" placeholder="Почта"><br>
+        <input class="register-input" type="text" name="name" placeholder="Имя"><br>
+        <input class="register-input" type="password" name="password1" placeholder="Пароль"><br>
+        <input class="register-input" type="password" name="password2" placeholder="Повтор пароля"><br>
+        <button class="register-submit" type="submit">Зарегистрироваться</button>
+    </form>
+    <hr>
+{% endblock %}
+{% block script %} {% include static('register.js') %} {% endblock %}

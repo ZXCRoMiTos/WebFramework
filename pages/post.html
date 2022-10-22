@@ -1,0 +1,28 @@
+{% extends template('base.html') %}
+{% block title %} {{ post.name }} {% endblock %}
+{% block body %}
+    <hr>
+    <div class="all-content-block">
+        <ul class="post-information ">
+            <li style="list-style-type: None">Автор:  {{ post.creator.name }}</li>
+            <li style="list-style-type: None">Дата:  {{ post.date }}</li>
+        </ul>
+        <div class="content-block" id="{{ post.id }}">
+            <h2>{{ post.name }}</h2>
+            <img src={{ post.content[0] }} alt="media">
+            <p class="content-text">{{ post.content[1] }}</p>
+        </div>
+    </div>
+    {% if user %}
+        <form method="post" class="comment-form overall-indent-left">
+            <input class="comment-input" type="text" placeholder="Комментарий" name="comment">
+            <button type="submit">Отправить</button>
+        </form>
+    {% endif %}
+    <div class="comments overall-indent-left">
+        {% if not comments %} <p>Похоже здесть нет комментариев :C</p> {% endif %}
+        {% for comment in comments %}
+            <p>{{ comment.date }} | {{ comment.username }}: {{ comment.comment_text }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

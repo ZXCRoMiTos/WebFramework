@@ -1,44 +1,56 @@
-{% extends 'base.html' %}
+{% extends template('base.html') %}
 {% block title %} {{ date }} {% endblock %}
-{% block style %}
-   {% include 'style.html' %}
-{% endblock %}
-{% block header %} {% include 'header.html' %} {% endblock %}
 {% block body %}
     <hr><h1>{{ name }}</h1><hr>
     <div>
-        {% include 'categories_list.html' %}
-        <ul class="action-menu">
-            <li class="action-menu-item" id="1">Создание поста</li> /
-            <li class="action-menu-item" id="2">Подписка</li> /
-            <li class="action-menu-item" id="3">Список подписчиков</li> /
-            <li class="action-menu-item" id="4">Создание подкатегории</li>
-        </ul>
+        {% include template('categories_list.html') %}
+        {% if user %}
+            <ul class="action-menu">
+                <li class="action-menu-item" id="1">Создание поста</li> /
+                <li class="action-menu-item" id="2">Подписка</li> /
+                <li class="action-menu-item" id="3">Список подписчиков</li>
+                {% if user.access_rights == 2 %}
+                   / <li class="action-menu-item" id="4">Создание подкатегории</li>
+                {% endif %}
+            </ul>
+        {% endif %}
     </div>
 
     <div class="form-space overall-indent-bottom">
+    </div><hr>
+    <div class="pagination overall-indent-left overall-indent-right">
+        {% if page_number - 1 >= 1 %}
+            <a style="text-decoration: none;" href="/category/?id={{ page_id }}&page={{ page_number - 1 }}">Предыдущая страница [{{ page_number - 1 }}]</a>
+        {% endif %}
+        {% if page_number <  last_page %}
+            <a style="text-decoration: none;" href="/category/?id={{ page_id }}&page={{ page_number + 1 }}">Следующая страница [{{ page_number + 1 }}]</a>
+        {% endif %}
     </div>
-
-    <hr>
 
     {% for post in posts_list %}
         <div class="all-content-block">
+            <ul class="post-information ">
+                <li style="list-style-type: None">Автор:  {{ post.creator.name }}</li>
+                <li style="list-style-type: None">Дата:  {{ post.date }}</li>
+            </ul>
             <div class="content-block" id="{{ post.id }}">
                 <h2>{{ post.name }}</h2>
                 <img src={{ post.content[0] }} alt="media">
                 <p class="content-text">{{ post.content[1] }}</p>
-                <form method="post" class="copy-post-form">
-                    <input type="hidden" name="type" value="copy_post">
-                    <input type="hidden" name="id" value="{{ post.id }}">
-                    <input type="hidden" name="name" value="{{ post.name }}">
-                    <button class="copy-post-submit" type="submit">Копировать</button>
-                </form>
-                <button class="edit-post-button" id="{{ post.id }}">Изменить</button>
+                {% if post.creator == user or user.access_rights == 2 %}
+                    <form method="post" class="copy-post-form">
+                        <input type="hidden" name="type" value="copy_post">
+                        <input type="hidden" name="id" value="{{ post.id }}">
+                        <input type="hidden" name="name" value="{{ post.name }}">
+                        <button class="copy-post-submit" type="submit">Копировать</button>
+                    </form>
+                    <button class="edit-post-button" id="{{ post.id }}">Изменить</button>
+                {% endif %}
             </div>
-            {% include 'edit_post_form.html' %}
+            {% include template('edit_post_form.html') %}
         </div>
     {% endfor %}
 
 {% endblock %}
 
-{% block script %} {% include 'js.html' %} {% endblock %}
+{% block script %} {% include static('category.js') %} {% include static('delete_cookie.js') %} {% endblock %}

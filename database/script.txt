@@ -1,0 +1,67 @@
+DROP TABLE IF EXISTS categories;
+CREATE TABLE IF NOT EXISTS categories (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL
+);
+
+DROP TABLE IF EXISTS main_categories;
+CREATE TABLE IF NOT EXISTS main_categories (
+    id INTEGER PRIMARY KEY
+);
+
+DROP TABLE IF EXISTS subcategories;
+CREATE TABLE IF NOT EXISTS subcategories (
+  parent_id INT NOT NULL,
+  child_id INT NOT NULL,
+  PRIMARY KEY (parent_id, child_id),
+  CONSTRAINT fk_parent_id FOREIGN KEY (parent_id) REFERENCES categories (id),
+  CONSTRAINT fk_child_id FOREIGN KEY (child_id) REFERENCES categories (id)
+);
+
+DROP TABLE IF EXISTS posts;
+CREATE TABLE IF NOT EXISTS posts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  category_id INTEGER,
+  media_expansion TEXT NOT NULL,
+  name TEXT NOT NULL,
+  media TEXT NOT NULL,
+  description TEXT NOT NULL,
+  user_id INTEGER NOT NULL,
+  create_date TEXT NOT NULL,
+  FOREIGN KEY (category_id) REFERENCES categories (id)
+);
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    login TEXT UNIQUE NOT NULL,
+    name TEXT NOT NULL,
+    password TEXT NOT NULL,
+    access_rights INTEGER NOT NULL
+);
+
+DROP TABLE IF EXISTS subscribers;
+CREATE TABLE IF NOT EXISTS subscribers (
+  category_id INT NOT NULL,
+  user_id INT NOT NULL,
+  PRIMARY KEY (category_id, user_id),
+  CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES categories (id),
+  CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+DROP TABLE IF EXISTS notifiers;
+CREATE TABLE IF NOT EXISTS notifiers (
+  category_id INTEGER PRIMARY KEY,
+  sms INT NOT NULL,
+  email INT NOT NULL,
+  FOREIGN KEY (category_id) REFERENCES categories (id)
+);
+
+DROP TABLE IF EXISTS comments;
+CREATE TABLE IF NOT EXISTS comments (
+  id INTEGER PRIMARY KEY,
+  post_id INT NOT NULL,
+  date TEXT NOT NULL,
+  username TEXT NOT NULL,
+  comment_text TEXT NOT NULL
+);

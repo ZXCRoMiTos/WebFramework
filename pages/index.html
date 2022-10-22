@@ -1,18 +1,31 @@
-{% extends 'base.html' %}
+{% extends template('base.html') %}
 {% block title %} {{ title }} {% endblock %}
-{% block style %}
-   {% include 'style.html' %}
-{% endblock %}
-{% block header %} {% include 'header.html' %} {% endblock %}
 {% block body %}
-    <hr><h1>Главная страница</h1>
-    {% include 'categories_list.html' %}
-    {% include 'create_category_form.html' %}
+    <hr><h1>Главная страница</h1><hr>
+    <div class="overall-indent-bottom">
+        {% include template('categories_list.html') %}
+        {% if user.access_rights == 2 %} {% include template('create_category_form.html') %} {% endif %}
+    </div><hr>
+    <div class="pagination overall-indent-left overall-indent-right">
+        {% if page_number - 1 >= 1 %}
+            <a style="text-decoration: none;" href="/?page={{ page_number - 1 }}">Предыдущая страница [{{ page_number - 1 }}]</a>
+        {% endif %}
+        {% if page_number < last_page %}
+            <a style="text-decoration: none;" href="/?page={{ page_number + 1 }}">Следующая страница [{{ page_number + 1 }}]</a>
+        {% endif %}
+    </div>
     {% for post in posts %}
-        <div class="content-block space">
-            <h2>{{ post.name }}</h2>
-            <img src={{ post.content[0] }} alt="media">
-            <p class="content-text">{{ post.content[1] }}</p>
+        <div class="all-content-block">
+            <ul class="post-information">
+                <li style="list-style-type: None">Автор:  {{ post.creator.name }}</li>
+                <li style="list-style-type: None">Дата:  {{ post.date }}</li>
+            </ul>
+            <div class="content-block space" id="{{ post.id }}">
+                <h2>{{ post.name }}</h2>
+                <img src={{ post.content[0] }} alt="media">
+                <p class="content-text">{{ post.content[1] }}</p>
+            </div>
         </div>
     {% endfor %}
 {% endblock %}
+{% block script %} {% include static('post_link.js') %} {% include static('delete_cookie.js') %} {% endblock %}
